@@ -26,6 +26,6 @@ For an overview of the available commands, run the following – see also image 
 python3 cli.py --help
 ```
 
-![alt text](tmp/image.png)
+![alt text](assets/app-help.png)
 
 
