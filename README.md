@@ -14,10 +14,14 @@ Clone this repository.
 git clone https://github.com/nikolaos-mavromatis/task-tracker.git
 ```
 
-Move into the newly created directory.
+Move into the newly created directory, create a virtual environment and install required packages.
 ```bash
 cd task-tracker
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r requirements.txt
 ```
+
 
 You can start issuing commands to the task tracker. 
 
