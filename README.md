@@ -22,8 +22,12 @@ source .venv/bin/activate
 pip3 install -r requirements.txt
 ```
 
+You can start issuing commands to the task tracker. For example, to start a coding task:
+```bash
+python3 cli.py start coding
+```
 
-You can start issuing commands to the task tracker. 
+![alt text](assets/start-task.png)
 
 For an overview of the available commands, run the following – see also image below.
 ```bash
