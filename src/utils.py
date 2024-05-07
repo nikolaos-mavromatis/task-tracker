@@ -101,7 +101,8 @@ class TaskHandler:
 
     def __init__(self, db):
         if not os.path.exists(CURRENT_TASK_FILE):
-            CURRENT_TASK_FILE.touch(exist_ok=True)
+            print("Creating a new task file.")
+            os.makedirs(os.path.dirname(CURRENT_TASK_FILE), exist_ok=True)
 
             self._write_empty_task()
 
