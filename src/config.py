@@ -5,7 +5,7 @@ ROOT = Path(__file__).parents[1]
 """The root directory of the project."""
 
 EMPTY_TASK = {
-    "tag": "NONE",
+    "tag": None,
     "start_time": None,
     "last_resumed": None,
     "duration": 0.0,
@@ -25,23 +25,5 @@ DB_PATH = ROOT / "var" / "tasks.db"
 NO_TASK_MSG = "No task is currently running."
 """The message to display when no task is running."""
 
-
-class Tag(Enum):
-    """Enum class for tags"""
-
-    CODING = "CODING"
-    MEETING = "MEETING"
-    TRAINING = "TRAINING"
-    BREAK = "BREAK"
-    OTHER = "OTHER"
-    _NONE = "NONE"  # reserved for empty tasks
-
-    def __str__(self) -> str:
-        return self.value
-
-    def __repr__(self) -> str:
-        return self.name
-
-    @classmethod
-    def _missing_(cls, value: str):
-        return Tag.OTHER
+DEFAULT_TAGS = ["CODING", "MEETING", "TRAINING", "BREAK", "OTHER"]
+"""The default tags for tasks."""

@@ -12,7 +12,6 @@ class DBHandler:
     def connect(self, db_path: Path = DB_PATH):
         try:
             self.conn = sqlite3.connect(db_path)
-            # print(f"Connected to {db_path}")
             self.create_table(self.conn)
         except sqlite3.Error as e:
             print(e)
@@ -53,7 +52,6 @@ class DBHandler:
 
     def __del__(self):
         if self.conn:
-            # print("Closing connection.")
             self.conn.close()
 
 

@@ -1,17 +1,53 @@
+"""Utility functions for task management."""
+
 import datetime
 import json
 import os
-import pandas as pd
+from dataclasses import dataclass, field
 from pathlib import Path
+
+import pandas as pd
 
 from src.config import (
     CURRENT_TASK_FILE,
     DATETIME_FORMAT,
     DB_PATH,
+    DEFAULT_TAGS,
     EMPTY_TASK,
     NO_TASK_MSG,
-    Tag,
 )
+
+
+@dataclass
+class Tag:
+    """Dataclass for task tags."""
+
+    name: str | None = field(default="NONE")
+    valid_tags: list[str] = field(
+        default_factory=lambda: DEFAULT_TAGS,
+        init=False,
+        repr=False,
+        hash=False,
+        compare=False,
+    )
+
+    def __post_init__(self):
+        if not isinstance(self.name, str):
+            raise TypeError(f"Tag name must be a string. Got {type(self.name)}.")
+
+        self.name = self.name.upper()
+
+        # `NONE` is a reserved tag for empty tasks
+        if self.name not in [*DEFAULT_TAGS, "NONE"]:
+            raise ValueError(
+                f"Invalid tag {self.name}. Must be one of {self.valid_tags}."
+            )
+
+    def __str__(self) -> str:
+        return self.name if self.name else "NONE"
+
+    def __repr__(self) -> str:
+        return self.name if self.name else "NONE"
 
 
 class Task:
@@ -25,7 +61,7 @@ class Task:
         duration: float = 0.0,
         status: str = "IN PROGRESS",
     ):
-        self.tag = Tag(str(tag).upper())
+        self.tag = Tag(tag)
         self.start_time = (
             datetime.datetime.strptime(start_time, DATETIME_FORMAT)
             if start_time
@@ -56,7 +92,7 @@ class Task:
     @classmethod
     def from_json(cls, filepath: Path):
         """Alternate constructor to create a Task object from a json file."""
-        with open(filepath, "r") as file:
+        with open(filepath, "r", encoding="utf-8") as file:
             current_task = json.load(file)
 
         return cls(
@@ -69,10 +105,10 @@ class Task:
 
     def to_json(self, filepath: Path):
         """Save the task object to a json file."""
-        with open(filepath, "w") as file:
+        with open(filepath, "w", encoding="utf-8") as file:
             json.dump(
                 {
-                    "tag": self.tag.value,
+                    "tag": self.tag.name,
                     "start_time": (
                         self.formatted_start_time if self.start_time else None
                     ),
@@ -106,16 +142,16 @@ class TaskHandler:
             self._write_empty_task()
 
         self.task = Task.from_json(CURRENT_TASK_FILE)
-        self.task_in_progress = self.task.tag != Tag._NONE
+        self.task_in_progress = self.task.tag.name != "NONE"
         self.db = db
 
     def start(self, tag: str):
         """Start a new task."""
-        if self.task.tag.value == tag.upper() and self.task.status == "IN PROGRESS":
+        if self.task.tag.name == tag.upper() and self.task.status == "IN PROGRESS":
             print(f"Aleady working on {self.task.tag}.")
             return
 
-        if self.task.tag.value == tag.upper() and self.task.status == "PAUSED":
+        if self.task.tag.name == tag.upper() and self.task.status == "PAUSED":
             print(f"{self.task.tag} was paused. Resuming the task.")
             self.resume()
             return
@@ -193,7 +229,7 @@ class TaskHandler:
     def reset(self):
         """Reset current task, i.e., start a new task using the current task's tag."""
         if self.task_in_progress:
-            self.task = Task(self.task.tag)
+            self.task = Task(self.task.tag.name)
 
             self.task.to_json(CURRENT_TASK_FILE)
             print(f"Reset {self.task.tag} duration.")
@@ -238,7 +274,7 @@ class TaskHandler:
 
     def _write_empty_task(self):
         """Replace current task with an empty task."""
-        with open(CURRENT_TASK_FILE, "w") as file:
+        with open(CURRENT_TASK_FILE, "w", encoding="utf-8") as file:
             json.dump(EMPTY_TASK, file)
 
     def _update_task_duration(self):
@@ -249,6 +285,4 @@ class TaskHandler:
 
 
 if __name__ == "__main__":
-    handler = TaskHandler()
-
-    print(handler.show_overview())
+    ...
