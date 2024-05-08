@@ -3,9 +3,9 @@
 from typing import Annotated
 import typer
 
-from src.config import DEFAULT_TAGS
-from src.utils import TaskHandler
-from src.database import DBHandler
+from task_tracker.config import DEFAULT_TAGS
+from task_tracker.utils import TaskHandler
+from task_tracker.database import DBHandler
 
 app = typer.Typer()
 db = DBHandler()

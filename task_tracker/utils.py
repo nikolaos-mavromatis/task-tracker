@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from src.config import (
+from task_tracker.config import (
     CURRENT_TASK_FILE,
     DATETIME_FORMAT,
     DB_PATH,

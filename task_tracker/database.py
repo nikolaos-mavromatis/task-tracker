@@ -1,6 +1,6 @@
 import sqlite3
 from pathlib import Path
-from src.config import DB_PATH
+from task_tracker.config import DB_PATH
 
 
 class DBHandler:
