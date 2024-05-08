@@ -76,7 +76,7 @@ def show(n: Annotated[int, typer.Argument(help="Number of tasks to show.")] = 5)
 
 @app.command()
 def clear():
-    """Clear the database."""
+    """Clear all tasks from the database."""
     if typer.confirm("Do you want to clear the database?"):
         db.clear_table()
         print("Database cleared.")

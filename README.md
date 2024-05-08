@@ -36,4 +36,27 @@ python3 cli.py --help
 
 ![alt text](assets/app-help.png)
 
+## Functional Requirements
+> The **user** must be able to...
+- [x] start a task with a specific tag.
+- [x] pause/resume a task that is in progress.
+- [x] mark a task as finished.
+- [x] abort a task, i.e., abandon the task in progress.
+- [x] view the status of the task tracker.
+- [x] view last N number of tasks that were worked on.
+- [ ] view a breakdown of the tasks worked on on a specific date.
+- [x] reset timer of current task.
+- [ ] switch through tasks seamlessly, i.e., not having to explicitly finish one task in order to start another.
+- [ ] define new tags for tasks.
+
+> The **app** must...
+- [x] save completed tasks in a local database.
+- [x] keep track of total time of active work spent on a single task. 
+- [x] have a set of predefined tags for task types.
+- [x] print useful messages when the user:
+  - [x] tries to interact with a task when there is no task running.
+  - [x] starts a task with a new tag.
+  - [x] starts a task with the same tag as the current task.
+  - [x] pauses the tracker when a task is already paused.
+  - [x] resumes the tracker when there is no paused task.
 
