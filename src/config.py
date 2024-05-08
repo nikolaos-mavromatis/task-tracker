@@ -5,7 +5,7 @@ ROOT = Path(__file__).parents[1]
 """The root directory of the project."""
 
 EMPTY_TASK = {
-    "tag": None,
+    "tag": "NONE",
     "start_time": None,
     "last_resumed": None,
     "duration": 0.0,

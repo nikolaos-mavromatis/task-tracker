@@ -3,9 +3,9 @@
 from typing import Annotated
 import typer
 
+from src.config import DEFAULT_TAGS
 from src.utils import TaskHandler
 from src.database import DBHandler
-from src.config import Tag
 
 app = typer.Typer()
 db = DBHandler()
@@ -15,10 +15,9 @@ handler = TaskHandler(db)
 @app.command()
 def start(tag: Annotated[str, typer.Argument(help="The tag for the task.")]):
     """Start a new task."""
-    if tag.upper() not in Tag.__members__:
-        valid_tags = ", ".join([k for k in Tag.__members__ if k != "_NONE"])
+    if tag.upper() not in DEFAULT_TAGS:
         typer.confirm(
-            f"Unknown tag {tag.upper()}. Valid task tags are {valid_tags}.\nDo you want to create a new task using the tag {Tag.OTHER}?",
+            f"Unknown tag {tag.upper()}. Valid task tags are {DEFAULT_TAGS}.\nDo you want to create a new task using the tag 'OTHER'?",
             abort=True,
         )
         tag = "OTHER"
