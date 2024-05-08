@@ -12,7 +12,6 @@ urls = { Homepage = "https://github.com/nikolaos-mavromatis/task-tracker" }
 python = "^3.10"
 typer = "^0.12.3"
 pandas = "^2.2.2"
-black = "^24.4.2"
 
 [tool.poetry.group.dev.dependencies]
 typer = "^0.12.3"
