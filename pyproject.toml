@@ -12,6 +12,7 @@ urls = { Homepage = "https://github.com/nikolaos-mavromatis/task-tracker" }
 python = "^3.10"
 typer = "^0.12.3"
 pandas = "^2.2.2"
+pytest-cov = "^5.0.0"
 
 [tool.poetry.group.dev.dependencies]
 typer = "^0.12.3"
@@ -32,3 +33,6 @@ line-length = 88
 
 [tool.isort]
 profile = "black"
+
+[tool.poetry.scripts]
+task-tracker = "task_tracker.cli:app"
